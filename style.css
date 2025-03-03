@@ -1,0 +1,42 @@
+
+.btn-custom:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-0.5px);  /*eleva o botão */
+}
+.pink-vulvet {
+    font-family: 'Roboto', 'Open Sans', sans-serif; 
+    font-weight: 1000; 
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 0.5px; /* espaçamento entre as letras */
+    font-size: 20px;
+    text-align: center;
+}
+
+/* Estilos CSS para o formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input, select {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
