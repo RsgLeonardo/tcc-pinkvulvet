@@ -1,0 +1,49 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fcfbfb !important;
+}
+
+.main-content {
+  flex: 1;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.btn {
+  background-color: black !important;
+  border: none !important;
+}
+
+.btn-custom:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-0.5px);
+}
+
+.input-grande {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 15px;
+}
+
+.logo {
+  justify-content: center;
+}
+
+.ic {
+  margin-top: -10px;
+}

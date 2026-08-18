@@ -1,0 +1,18 @@
+.botaun:hover {
+  background-color: var(--cinza-claro) !important;
+  color: var(--preto) !important;
+}
+
+.bordinha {
+  border: 1px solid var(--cinza-borda);
+  background-color: var(--branco);
+}
+
+body {
+  background-color: var(--cinza-mais-mais-claro);
+}
+
+.botaun {
+  width: 500px !important;
+  cursor: pointer;
+}
