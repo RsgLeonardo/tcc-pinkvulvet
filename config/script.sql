@@ -1,0 +1,222 @@
+-- create database pinkvulvet;
+use pinkvulvet;
+-- drop database pinkvulvet;
+
+CREATE TABLE cliente (
+    id_cliente INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(60) NOT NULL,
+    nome VARCHAR(70) NOT NULL,
+    cpf VARCHAR(11) UNIQUE,
+    telefone VARCHAR(15) NOT NULL,
+    data_nascimento DATE
+);
+
+CREATE TABLE categoria (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE produto (
+    id_produto INT AUTO_INCREMENT PRIMARY KEY,
+    id_categoria INT NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    nome VARCHAR(50),
+    descricao VARCHAR(200),
+    imagem VARCHAR(200),
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria) ON DELETE CASCADE
+);
+
+CREATE TABLE endereco (  
+    id_endereco INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id_cliente INT NOT NULL,
+    nome VARCHAR(70) NOT NULL,
+    telefone VARCHAR(15),
+    cep VARCHAR(8) NOT NULL,
+    endereco VARCHAR(100),
+    numero INT,
+    complemento VARCHAR(30),
+    bairro VARCHAR(30),
+    estado VARCHAR(30),
+    cidade VARCHAR(30),
+    informacoes VARCHAR(150),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE
+);
+
+CREATE TABLE pedido (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    valor_total DECIMAL(10, 2) NOT NULL,
+    data_pedido DATE NOT NULL,
+    status_pedido VARCHAR(1) NOT NULL, -- a=aberto c= cancelado f=finalizado 
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE
+);
+
+CREATE TABLE pagamento (
+    id_pagamento INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL,
+    forma_pagamento VARCHAR(50) NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+);
+
+CREATE TABLE item_pedido (
+    id_item INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    id_produto INT NOT NULL,
+    quantidade INT NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+    FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
+);
+
+CREATE TABLE favoritos (
+    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    id_produto INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
+    FOREIGN KEY (id_produto) REFERENCES produto(id_produto) ON DELETE CASCADE
+);
+
+CREATE TABLE carrinho (
+    id_carrinho INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    id_produto INT NOT NULL,
+    quantidade INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
+    FOREIGN KEY (id_produto) REFERENCES produto(id_produto) ON DELETE CASCADE
+);
+
+-- insert into cliente (id_cliente,email,senha,nome,cpf,telefone) value
+-- (123-45,'vic@gmail.com',1234,'Nafitaly Vitoria',12345678912,16997896750);*/
+
+INSERT INTO categoria (nome) VALUES
+('Face');
+
+-- INSERT INTO produto (id_categoria,preco,nome,descricao,imagem) VALUES 
+-- (1, 75.99, 'Base Matte', 'Base facial Matte', 'base1.jpeg');
+
+-- SELECT * FROM produto;
+
+-- SELECT * FROM categoria;
+
+-- DELETE FROM produto WHERE id_produto = 1;
+
+-- DROP DATABASE pinkvulvet;
+
+
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 299.99, 'Base Ultra Cobertura', 'Base Facial com alta cobertura e fórmula de longa duração. Perfeita para ocasiões especiais.', 'base01.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 302.50, 'Base Média Cobertura', 'Base Facial com cobertura média e acabamento natural. Ideal para o dia a dia.', 'base02.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 298.75, 'Base Matte Perfeita', 'Base Facial com acabamento matte e controle de oleosidade. Mantém a pele sequinha o dia todo.', 'base03.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 301.00, 'Base Hidratante Glow', 'Base Facial com fórmula hidratante e acabamento luminoso. Proporciona um brilho saudável.', 'base04.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 299.50, 'Base Longa Duração', 'Base Facial com fórmula de longa duração e alta cobertura. Não craquela e mantém a pele uniforme.', 'base05.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 303.25, 'Base Oil-Free Perfeição', 'Base Facial oil-free com acabamento natural. Ideal para peles oleosas e mistas.', 'base06.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 300.75, 'Base com Proteção Solar', 'Base Facial com proteção solar SPF 30. Protege a pele dos danos causados pelo sol.', 'base07.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 299.80, 'Base Alta Cobertura', 'Base Facial de alta cobertura e acabamento aveludado. Perfeita para peles com imperfeições.', 'base08.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 300.00, 'Base para Pele Sensível', 'Base Facial desenvolvida para peles sensíveis. Fórmula suave e hipoalergênica.', 'base09.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 301.50, 'Base Efeito Natural', 'Base Facial com efeito natural e acabamento leve. Ideal para quem busca uma maquiagem discreta.', 'base10.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 299.90, 'Base Acabamento Luminoso', 'Base Facial com acabamento luminoso e fórmula hidratante. Proporciona uma pele radiante.', 'base11.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 302.00, 'Base Mix', 'Base Facial adequada para todos os tipos de pele. Fórmula versátil e acabamento seco.', 'base12.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 303.00, 'Base Antienvelhecimento', 'Base Facial com ingredientes antienvelhecimento. Reduz a aparência de linhas finas e rugas.', 'base13.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 300.50, 'Base Vegana Natural', 'Base Facial vegana com ingredientes naturais. Livre de crueldade animal.', 'base14.jpeg');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(1, 301.75, 'Base Mineral', 'Base Facial mineral com fórmula suave e leve. Ideal para peles sensíveis.', 'base15.jpeg');
+
+INSERT INTO categoria (nome) VALUES
+('Labios');
+
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(2, 19.99, 'Gloss Labial Rosa', 'Gloss labial hidratante com aroma de morango.', 'gloss1.jpeg'),
+(2, 24.99, 'Gloss Labial Nude', 'Brilho discreto para realçar a beleza natural.', 'gloss2.jpeg'),
+(2, 22.50, 'Gloss Labial Vermelho', 'Gloss intenso para lábios marcantes.', 'gloss3.jpeg'),
+(2, 18.00, 'Gloss Labial Transparente', 'Hidratação e brilho natural.', 'gloss4.jpeg'),
+(2, 20.00, 'Gloss Labial Cereja', 'Com aroma doce de cereja.', 'gloss5.jpeg'),
+(2, 26.50, 'Gloss Labial Dourado', 'Acabamento metálico brilhante.', 'gloss6.jpeg'),
+(2, 21.99, 'Gloss Labial Pink', 'Cor viva para um visual ousado.', 'gloss7.jpeg'),
+(2, 25.00, 'Gloss Labial Ameixa', 'Um tom escuro e sofisticado.', 'gloss8.jpeg'),
+(2, 23.50, 'Gloss Labial Coral', 'Perfeito para um look de verão.', 'gloss9.jpeg'),
+(2, 22.00, 'Gloss Labial Lilás', 'Traz um tom delicado e feminino.', 'gloss10.jpeg');
+
+
+INSERT INTO categoria (nome) VALUES
+('Sobrancelhas');
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(3, 80.00, 'Gel Delineador para Sobrancelhas - Blonde', 'Gel Delineador para Sobrancelhas Marrom Escuro', 'sombra1.jpg'),
+(3, 75.00, 'Gel Delineador para Sobrancelhas - Dark Brown', 'Gel Delineador para Sobrancelhas Marrom Médio', 'sombra2.jpg'),
+(3, 85.00, 'Gel Delineador para Sobrancelhas - Taupe', 'Gel Delineador para Sobrancelhas em Tom Taupe', 'sombra3.jpg'),
+(3, 80.00, 'Gel Delineador para Sobrancelhas - Soft Black', 'Gel Delineador para Sobrancelhas Preto Suave', 'sombra4.jpg'),
+(3, 78.00, 'Gel Delineador para Sobrancelhas - Espresso', 'Gel Delineador para Sobrancelhas Marrom Café', 'sombra5.jpg');
+
+INSERT INTO categoria (nome) VALUES
+('Olhos');
+
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(4, 120.00, 'Máscara de Cílios - Lash UP', 'Máscara incolor para cílios', 'rimel1.jpg'),
+(4, 110.00, 'Máscara de Cílios - Volume Max', 'Máscara preta para volume intenso', 'rimel2.jpg'),
+(4, 115.00, 'Máscara de Cílios - Curvatura Perfeita', 'Máscara preta para curvatura duradoura', 'rimel3.jpg'),
+(4, 125.00, 'Máscara de Cílios - Waterproof Extreme', 'Máscara preta à prova d’água', 'rimel4.jpg'),
+(4, 108.00, 'Máscara de Cílios - Efeito Natural', 'Máscara marrom para um visual leve e natural', 'rimel5.jpg'),
+(4, 118.00, 'Máscara de Cílios - Extra Longo', 'Máscara preta para alongamento máximo dos cílios', 'rimel6.jpg'),
+(4, 130.00, 'Máscara de Cílios - Volume e Curvatura', 'Máscara preta com fórmula enriquecida para volume e curvatura', 'rimel7.jpg'),
+(4, 112.00, 'Máscara de Cílios - Ultra Definição', 'Máscara preta para separação e definição perfeita dos cílios', 'rimel8.jpg'),
+(4, 109.00, 'Máscara de Cílios - Nutrição e Firmeza', 'Máscara preta com ingredientes nutritivos para cílios saudáveis', 'rimel9.jpg'),
+(4, 124.00, 'Máscara de Cílios - Drama Effect', 'Máscara preta para um olhar intenso e dramático', 'rimel10.jpg'),
+(4, 119.00, 'Máscara de Cílios - Leve e Natural', 'Máscara transparente para um efeito discreto', 'rimel11.jpg'),
+(4, 127.00, 'Máscara de Cílios - 24h de Fixação', 'Máscara preta de longa duração para um olhar impecável', 'rimel12.jpg'),
+(4, 122.00, 'Máscara de Cílios - Impacto Total', 'Máscara preta para volume e definição extremos', 'rimel13.jpg');
+
+
+INSERT INTO categoria (nome) VALUES
+('Perfumaria');
+
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(5, 1200.00, 'Miss Vulvet', 'Perfume doce com notas florais exóticas', 'perfume1.jpg'),
+(5, 1350.00, 'Golden Essence Luxe', 'Perfume amadeirado com toques de oud e baunilha', 'perfume2.jpg'),
+(5, 1400.00, 'Velvet Noir Intense', 'Perfume oriental com acordes de âmbar e especiarias nobres', 'perfume3.jpg'),
+(5, 1250.00, 'Pure Blossom Elite', 'Perfume floral refinado com notas de jasmim e lírio', 'perfume4.jpg'),
+(5, 1450.00, 'Mystic Breeze Exclusive', 'Perfume fresco e cítrico com toque sofisticado de bergamota', 'perfume5.jpg'),
+(5, 1550.00, 'Amber Glow Prestige', 'Perfume intenso com notas de âmbar, patchouli e couro', 'perfume6.jpg'),
+(5, 1300.00, 'Rosé Luxe Privé', 'Perfume elegante com toques de rosa turca e almíscar branco', 'perfume7.jpg'),
+(5, 1380.00, 'Night Symphony Royal', 'Perfume profundo com notas de jasmim, sândalo e musk', 'perfume8.jpg'),
+(5, 1500.00, 'Opulent Charm Signature', 'Perfume sofisticado com notas doces e florais raras', 'perfume9.jpg');
+
+INSERT INTO categoria (nome) VALUES
+('Acessorios');
+
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(6, 200.00, 'Pincel Para Corretivo e Acabamento', 'Pincel para região dos olhos', 'pincel1.jpg'),
+(6, 180.00, 'Pincel Para Base e Polimento', 'Ideal para aplicação uniforme de base líquida ou cremosa', 'pincel2.jpg'),
+(6, 190.00, 'Pincel Kabuki para Pó Solto', 'Perfeito para acabamento suave e natural', 'pincel3.jpg'),
+(6, 175.00, 'Pincel Angular para Contorno', 'Define e esculpe os traços do rosto', 'pincel4.jpg'),
+(6, 160.00, 'Pincel Duo Fiber para Iluminador', 'Destaca pontos estratégicos com leveza', 'pincel5.jpg'),
+(6, 155.00, 'Pincel de Precisão para Sombras', 'Aplicação detalhada para olhos marcantes', 'pincel6.jpg'),
+(6, 170.00, 'Pincel Esfumador Macio', 'Cria transições suaves de sombra', 'pincel7.jpg'),
+(6, 165.00, 'Pincel Para Blush Compacto', 'Distribui o produto de forma uniforme', 'pincel8.jpg'),
+(6, 150.00, 'Pincel Chanfrado para Delineado', 'Define o olhar com traços precisos', 'pincel9.jpg'),
+(6, 145.00, 'Pincel de Lábios Profissional', 'Contorna e preenche os lábios com perfeição', 'pincel10.jpg'),
+(6, 160.00, 'Pincel Vassourinha para Finalização', 'Remove resíduos e dá o toque final à maquiagem', 'pincel11.jpg'),
+(6, 185.00, 'Pincel Multifuncional para Pele', 'Versátil para diversos tipos de aplicação', 'pincel12.jpg');
+
+
+INSERT INTO produto (id_categoria, preco, nome, descricao, imagem) VALUES
+(3, 85.00, 'Gel Modelador para Sobrancelhas - Clear', 'Gel transparente para fixação natural das sobrancelhas', 'sombra6.jpg'),
+(3, 90.00, 'Gel Preenchedor para Sobrancelhas - Medium Brown', 'Gel pigmentado para sobrancelhas de tom médio', 'sombra7.jpg'),
+(3, 95.00, 'Gel de Longa Duração para Sobrancelhas - Dark Brown', 'Fixação resistente para sobrancelhas bem definidas', 'sombra8.jpg'),
+(3, 88.00, 'Gel Volumizador para Sobrancelhas - Soft Black', 'Textura leve para preenchimento suave', 'sombra9.jpg'),
+(3, 92.00, 'Gel à Prova d’Água para Sobrancelhas - Taupe', 'Fórmula resistente à água e ao suor', 'sombra10.jpg'),
+(3, 87.00, 'Gel Nutritivo para Sobrancelhas - Neutral Brown', 'Com ingredientes que fortalecem os fios', 'sombra11.jpg');
+
